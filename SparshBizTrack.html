@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sparsh Boutique">
+<title>Sparsh Boutique by Nidhi</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:#f0f7fa;overflow-x:hidden}
+#app{max-width:500px;margin:0 auto;min-height:100vh}
+#hdr{background:linear-gradient(135deg,#134f66,#1a6b8a);padding:14px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(26,107,138,.25)}
+.hdr-row{display:flex;align-items:center;justify-content:space-between}
+.hdr-name{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.hdr-boutique{font-size:10px;color:rgba(255,255,255,.8);margin-top:1px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.hdr-sub{font-size:10px;color:rgba(255,255,255,.55);margin-top:1px}
+.hdr-badge{background:rgba(255,255,255,.15);border-radius:10px;padding:5px 12px;font-size:12px;color:#fff;font-weight:600;white-space:nowrap}
+#bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;display:flex;background:#fff;border-top:1px solid #d4e6ed;box-shadow:0 -4px 20px rgba(26,107,138,.1);z-index:100}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 4px 8px;background:none;border:none;cursor:pointer;font-family:inherit;color:#6b8899;border-top:2.5px solid transparent;font-size:10px;font-weight:500;gap:3px;transition:color .15s}
+.nav-btn.active{color:#1a6b8a;border-top-color:#1a6b8a;font-weight:700}
+.nav-icon{font-size:20px;line-height:1}
+#main{padding:16px;padding-bottom:84px}
+.card{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 12px rgba(26,107,138,.08);cursor:pointer;transition:transform .1s}
+.card:active{transform:scale(.99)}
+.card-nc{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 12px rgba(26,107,138,.08)}
+.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px;white-space:nowrap;display:inline-block}
+.badge-primary{background:#e8f4f8;color:#1a6b8a}
+.badge-accent{background:#fef0e6;color:#e07b39}
+.badge-success{background:#e6f5ee;color:#2a7d52}
+.badge-warning{background:#fef3c7;color:#b45309}
+.badge-danger{background:#fdecea;color:#c0392b}
+.badge-gray{background:#eef1f3;color:#6b8899}
+.btn{padding:10px 18px;font-size:14px;border:none;border-radius:12px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:5px;transition:opacity .15s}
+.btn:active{opacity:.85}
+.btn-sm{padding:6px 11px;font-size:12px;border-radius:10px}
+.btn-full{width:100%}
+.btn-primary{background:#1a6b8a;color:#fff}
+.btn-ghost{background:transparent;color:#1a6b8a;border:1.5px solid #1a6b8a}
+.btn-wa{background:#25D366;color:#fff}
+.btn-danger{background:#c0392b;color:#fff}
+.btn-gray{background:#e6edf0;color:#3d5566}
+.btn-success{background:#2a7d52;color:#fff}
+.field{margin-bottom:12px}
+.field-label{font-size:11px;font-weight:700;color:#6b8899;margin-bottom:4px;text-transform:uppercase;letter-spacing:.6px}
+.finput{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #d4e6ed;font-size:14px;font-family:inherit;color:#1c2b36;background:#fff;box-sizing:border-box;outline:none}
+.finput:focus{border-color:#1a6b8a}
+.field-note{font-size:11px;color:#6b8899;margin-top:3px}
+.section{border-radius:14px;padding:12px 14px;margin-bottom:14px}
+.section-title{font-size:11px;font-weight:800;letter-spacing:.8px;margin-bottom:10px}
+.sec-vendor{background:#e8f4f8}.sec-vendor .section-title{color:#1a6b8a}
+.sec-customer{background:#fef0e6}.sec-customer .section-title{color:#e07b39}
+.sec-stock{background:#e6f5ee}.sec-stock .section-title{color:#2a7d52}
+.pay-row{display:flex;justify-content:space-around;font-size:13px;background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:10px;text-align:center}
+.pay-row b{font-size:15px;display:block;margin-top:2px}
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;overflow-y:auto;padding:12px 8px;display:none}
+#modal{background:#fff;margin:0 auto;max-width:500px;border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35)}
+#modal-hdr{padding:15px 20px;background:#1a6b8a;color:#fff;display:flex;justify-content:space-between;align-items:center}
+#modal-title{font-weight:800;font-size:16px}
+#modal-sub{font-size:11px;opacity:.75;margin-top:2px}
+#modal-close{background:none;border:none;color:#fff;font-size:28px;cursor:pointer;line-height:1;padding:0 4px;font-family:inherit}
+#modal-body{padding:20px;max-height:82vh;overflow-y:auto}
+.stat-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.stat-card{background:#fff;border-radius:16px;padding:14px 16px;flex:1 1 calc(50% - 6px);box-shadow:0 2px 10px rgba(26,107,138,.07)}
+.stat-icon{font-size:26px;margin-bottom:4px}
+.stat-val{font-size:20px;font-weight:800}
+.stat-label{font-size:12px;font-weight:600;color:#1c2b36;margin-top:2px}
+.stat-sub{font-size:11px;color:#6b8899;margin-top:1px}
+.filters{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.filter-btn{padding:6px 14px;border-radius:20px;border:none;background:#fff;color:#6b8899;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;box-shadow:0 1px 4px rgba(0,0,0,.08);transition:background .15s}
+.filter-btn.active{background:#1a6b8a;color:#fff;box-shadow:none}
+.search-box{width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid #d4e6ed;font-size:14px;font-family:inherit;margin-bottom:12px;background:#fff;box-sizing:border-box;outline:none}
+.search-box:focus{border-color:#1a6b8a}
+.profit-chip{display:inline-flex;align-items:center;border-radius:10px;padding:6px 14px;margin-bottom:14px;font-weight:700;font-size:13px}
+.profit-pos{background:#e6f5ee;color:#2a7d52}
+.profit-neg{background:#fdecea;color:#c0392b}
+.photo-full{width:100%;max-height:220px;object-fit:contain;border-radius:12px;margin-bottom:14px;background:#f0f0f0}
+.photo-upload-area{border:2px dashed #d4e6ed;border-radius:12px;padding:14px;text-align:center;cursor:pointer;color:#6b8899;font-size:13px;transition:all .2s}
+.photo-upload-area:hover{border-color:#1a6b8a;color:#1a6b8a;background:#e8f4f8}
+.empty{text-align:center;padding:48px 20px;color:#6b8899}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty-title{font-weight:600;font-size:15px;color:#3d5566}
+.empty-sub{font-size:13px;margin-top:6px;line-height:1.5}
+.row{display:flex;gap:8px}
+.col{flex:1;min-width:0}
+.row-sb{display:flex;justify-content:space-between;align-items:center}
+.row-btn{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.title-lg{font-size:18px;font-weight:800;color:#1c2b36}
+.title-sm{font-size:14px;font-weight:700;color:#1c2b36}
+.text-sm{font-size:12px;color:#6b8899}
+.text-xs{font-size:11px;color:#6b8899}
+.text-danger{color:#c0392b}
+.text-success{color:#2a7d52}
+.fw600{font-weight:600}
+.fw700{font-weight:700}
+.sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.outstanding{font-size:12px;font-weight:700;color:#c0392b;margin-top:4px}
+.select-bar{position:fixed;bottom:68px;left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:476px;background:#1a6b8a;color:#fff;border-radius:14px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 20px rgba(26,107,138,.4);z-index:99}
+.divider{height:1px;background:#eee;margin:12px 0}
+input[type=file]{display:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="hdr">
+    <div class="hdr-row">
+      <div>
+        <div class="hdr-name">🛍️ Sparsh Boutique by Nidhi</div>
+        <div class="hdr-boutique">Orders &middot; Payments &middot; WhatsApp</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center"><button onclick="showSettings()" style="background:rgba(255,255,255,.15);border:none;border-radius:10px;padding:5px 10px;color:#fff;font-size:16px;cursor:pointer;font-family:inherit;position:relative" title="Backup &amp; Settings">⚙️<span id="hdr-backup-dot" style="position:absolute;top:3px;right:3px;width:8px;height:8px;border-radius:50%;background:#e07b39;border:1.5px solid rgba(255,255,255,.7)"></span></button><div class="hdr-badge" id="hdr-count">0 orders</div></div>
+    </div>
+  </div>
+  <div id="main"></div>
+  <div id="bnav">
+    <button class="nav-btn active" id="nav-dashboard" onclick="switchTab('dashboard')"><span class="nav-icon">📊</span><span>Home</span></button>
+    <button class="nav-btn" id="nav-orders" onclick="switchTab('orders')"><span class="nav-icon">📦</span><span>Orders</span></button>
+    <button class="nav-btn" id="nav-vendors" onclick="switchTab('vendors')"><span class="nav-icon">🏪</span><span>Vendors</span></button>
+    <button class="nav-btn" id="nav-customers" onclick="switchTab('customers')"><span class="nav-icon">👥</span><span>Customers</span></button>
+  </div>
+  <div id="overlay" onclick="overlayClick(event)">
+    <div id="modal">
+      <div id="modal-hdr">
+        <div><div id="modal-title"></div><div id="modal-sub"></div></div>
+        <button id="modal-close" onclick="closeModal()">&#215;</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+  <input type="file" id="photo-input" accept="image/*" onchange="handlePhotoFile(this)">
+  <input type="file" id="import-input" accept=".json" onchange="importData(this)">
+</div>
+<script>
+const BOUTIQUE='Sparsh Boutique by Nidhi';
+const DEFAULT_CATS=['Kurti','Jewellery','Bed Sheet','Home Decor','AGE Products','Other'];
+const CLOTHING_CATS=['Kurti'];
+const BED_CATS=['Bed Sheet'];
+const CLOTHING_SIZES=['XS','S','M','L','XL','XXL','XXXL','Free Size','Custom'];
+const BED_SIZES=['Single','Double','Queen','King','Custom'];
+const PAY_MODES=['Credit','Advance','Partial','Paid'];
+
+let vendors=[],customers=[],orders=[],categories=[];
+let currentTab='dashboard',orderFilter='all',orderSearch='';
+let selectMode=false,selectedOrders=new Set();
+
+function loadData(){
+  try{vendors=JSON.parse(localStorage.getItem('sb_vendors')||'[]');}catch(e){vendors=[];}
+  try{customers=JSON.parse(localStorage.getItem('sb_customers')||'[]');}catch(e){customers=[];}
+  try{orders=JSON.parse(localStorage.getItem('sb_orders')||'[]');}catch(e){orders=[];}
+  try{categories=JSON.parse(localStorage.getItem('sb_categories')||JSON.stringify(DEFAULT_CATS));}catch(e){categories=[...DEFAULT_CATS];}
+}
+function _lsSet(key,val){
+  try{localStorage.setItem(key,JSON.stringify(val));return true;}
+  catch(e){
+    if(e.name==='QuotaExceededError'||e.code===22||e.code===1014){
+      showToast('⚠️ Storage full! Export a backup and remove old photos to free space.','danger',6000);
+    } else {
+      showToast('⚠️ Save failed: '+e.message,'danger',4000);
+    }
+    return false;
+  }
+}
+function saveV(){if(_lsSet('sb_vendors',vendors))trackSave();}
+function saveC(){if(_lsSet('sb_customers',customers))trackSave();}
+function saveO(){if(_lsSet('sb_orders',orders))trackSave();}
+function saveCats(){_lsSet('sb_categories',categories);}
+
+/* ── Backup tracking ── */
+function trackSave(){
+  const n=parseInt(localStorage.getItem('sb_save_count')||'0')+1;
+  localStorage.setItem('sb_save_count',n);
+  const last=localStorage.getItem('sb_last_backup');
+  const daysSince=last?Math.floor((Date.now()-parseInt(last))/(1000*60*60*24)):999;
+  if(n%5===0||daysSince>=3){showBackupBanner();}
+}
+function showBackupBanner(){
+  if(document.getElementById('backup-banner'))return;
+  const b=document.createElement('div');
+  b.id='backup-banner';
+  b.style.cssText='position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:476px;background:#b45309;color:#fff;border-radius:14px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,.3);z-index:200;font-size:13px;font-weight:600;gap:10px';
+  b.innerHTML=`<span>💾 Time to back up your data!</span><div style="display:flex;gap:6px"><button onclick="exportData();document.getElementById('backup-banner')?.remove()" style="background:rgba(255,255,255,.25);border:none;border-radius:8px;padding:5px 10px;color:#fff;font-size:12px;font-weight:700;cursor:pointer">Backup Now</button><button onclick="document.getElementById('backup-banner')?.remove()" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;padding:0 2px">&times;</button></div>`;
+  document.body.appendChild(b);
+  setTimeout(()=>b.remove(),30000);
+}
+function showToast(msg,type,duration){
+  const existing=document.getElementById('sb-toast');if(existing)existing.remove();
+  const t=document.createElement('div');
+  t.id='sb-toast';
+  const bg=type==='danger'?'#c0392b':type==='success'?'#2a7d52':'#1a6b8a';
+  t.style.cssText=`position:fixed;top:72px;left:50%;transform:translateX(-50%);background:${bg};color:#fff;border-radius:12px;padding:10px 18px;font-size:13px;font-weight:600;z-index:300;box-shadow:0 4px 16px rgba(0,0,0,.25);max-width:90%;text-align:center;transition:opacity .3s`;
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},(duration||2500)-300);
+}
+function updateBackupStatus(){
+  const last=localStorage.getItem('sb_last_backup');
+  const el=document.getElementById('hdr-backup-dot');
+  if(!el)return;
+  if(!last){el.style.background='#e07b39';el.title='No backup yet!';}
+  else{
+    const days=Math.floor((Date.now()-parseInt(last))/(1000*60*60*24));
+    if(days===0){el.style.background='#2a7d52';el.title='Backed up today';}
+    else if(days<=3){el.style.background='#b45309';el.title='Last backup '+days+'d ago';}
+    else{el.style.background='#c0392b';el.title='No backup in '+days+' days!';}
+  }
+}
+
+const fmt=n=>'&#8377;'+Number(n||0).toLocaleString('en-IN');
+const fmtPlain=n=>'\u20B9'+Number(n||0).toLocaleString('en-IN');
+const toStr=()=>new Date().toISOString().split('T')[0];
+const newId=()=>'ORD-'+Date.now().toString().slice(-6);
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const getV=id=>vendors.find(v=>v.id===id);
+const getC=id=>customers.find(c=>c.id===id);
+const getO=id=>orders.find(o=>o.id===id);
+const badge=(t,c)=>`<span class="badge badge-${c||'gray'}">${esc(t)}</span>`;
+const custDue=cid=>orders.filter(o=>o.customerId===cid).reduce((s,o)=>s+Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0)),0);
+const vendDue=vid=>orders.filter(o=>o.vendorId===vid).reduce((s,o)=>s+Math.max(0,(o.vendorPrice||0)-(o.vendorAmountPaid||0)),0);
+const getSizeOpts=cat=>CLOTHING_CATS.includes(cat)?CLOTHING_SIZES:BED_CATS.includes(cat)?BED_SIZES:null;
+
+function switchTab(tab){
+  currentTab=tab;selectMode=false;selectedOrders.clear();
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const nb=document.getElementById('nav-'+tab);
+  if(nb)nb.classList.add('active');
+  document.getElementById('hdr-count').textContent=orders.length+' orders';
+  renderMain();
+}
+function renderMain(){
+  const m=document.getElementById('main');
+  if(currentTab==='dashboard')m.innerHTML=renderDashboard();
+  else if(currentTab==='orders')m.innerHTML=renderOrders();
+  else if(currentTab==='vendors')m.innerHTML=renderVendors();
+  else if(currentTab==='customers')m.innerHTML=renderCustomers();
+}
+
+function renderDashboard(){
+  const pendDel=orders.filter(o=>o.type==='customer_order'&&o.deliveryStatus!=='delivered');
+  const awaitRec=orders.filter(o=>o.vendorOrderStatus!=='received');
+  const inStock=orders.filter(o=>o.type==='stock_order'&&o.stockStatus==='in_stock');
+  const toRecv=orders.filter(o=>o.type==='customer_order'||(o.type==='stock_order'&&o.stockStatus==='sold')).reduce((s,o)=>s+Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0)),0);
+  const toPay=orders.reduce((s,o)=>s+Math.max(0,(o.vendorPrice||0)-(o.vendorAmountPaid||0)),0);
+  const sc=(icon,label,val,sub,vc)=>`<div class="stat-card"><div class="stat-icon">${icon}</div><div class="stat-val" style="color:${vc||'#1a6b8a'}">${val}</div><div class="stat-label">${label}</div>${sub?`<div class="stat-sub">${sub}</div>`:''}</div>`;
+  let pdHtml='';
+  if(pendDel.length>0){
+    pdHtml=`<div class="title-sm" style="margin-bottom:8px">🚚 Pending Deliveries</div>`;
+    pendDel.slice(0,4).forEach(o=>{
+      const c=getC(o.customerId);const ready=o.vendorOrderStatus==='received';
+      pdHtml+=`<div class="card" onclick="showOrderDetail('${o.id}')"><div class="row-sb"><div><div class="fw700" style="font-size:14px">${esc(o.productName)}</div><div class="text-xs">${esc(c?.name||'—')}&nbsp;&middot;&nbsp;${o.id}</div></div>${badge(ready?'📦 Ready':'⏳ Awaiting',ready?'success':'warning')}</div></div>`;
+    });
+    if(pendDel.length>4)pdHtml+=`<div class="text-xs" style="text-align:center;margin-bottom:10px">+${pendDel.length-4} more &mdash; see Orders tab</div>`;
+  }
+  let stHtml='';
+  if(inStock.length>0){
+    stHtml=`<div class="title-sm" style="margin-bottom:8px;margin-top:6px">📦 Your Stock Items</div>`;
+    inStock.slice(0,3).forEach(o=>{const v=getV(o.vendorId);stHtml+=`<div class="card" onclick="showOrderDetail('${o.id}')"><div class="row-sb"><div><div class="fw700" style="font-size:14px">${esc(o.productName)}</div><div class="text-xs">${esc(o.category)}&nbsp;&middot;&nbsp;${esc(v?.name||'—')}</div></div>${badge(fmt(o.vendorPrice),'primary')}</div></div>`;});
+  }
+  const empty=orders.length===0?`<div class="empty"><div class="empty-icon">🛍️</div><div class="empty-title">No orders yet</div><div class="empty-sub">Start by adding vendors &amp; customers,<br>then create your first order!</div></div>`:'';
+  return `<div style="margin-bottom:16px"><div style="font-size:22px;font-weight:800;color:#1c2b36">Hello, Nidhi! 👋</div><div class="text-sm" style="margin-top:2px">${orders.length} orders&nbsp;&middot;&nbsp;${vendors.length} vendors&nbsp;&middot;&nbsp;${customers.length} customers</div></div><div class="stat-grid">${sc('🚚','Pending Deliveries',pendDel.length,'',pendDel.length>0?'#b45309':'#2a7d52')}${sc('📬','Awaiting from Vendor',awaitRec.length,'',awaitRec.length>0?'#1a6b8a':'#2a7d52')}${sc('💰','To Collect',fmt(toRecv),'From customers',toRecv>0?'#2a7d52':'#6b8899')}${sc('💸','To Pay',fmt(toPay),'To vendors',toPay>0?'#c0392b':'#6b8899')}${sc('📦','In Stock',inStock.length,'Unsold items','#1a6b8a')}</div>${pdHtml}${stHtml}${empty}`;
+}
+
+function renderOrders(){
+  let filtered=orders.filter(o=>{
+    if(orderFilter==='undelivered')return o.type==='customer_order'&&o.deliveryStatus!=='delivered';
+    if(orderFilter==='awaiting')return o.vendorOrderStatus!=='received';
+    if(orderFilter==='stock')return o.type==='stock_order'&&o.stockStatus==='in_stock';
+    if(orderFilter==='dues')return Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0))>0;
+    return true;
+  }).filter(o=>!orderSearch||o.productName.toLowerCase().includes(orderSearch.toLowerCase())||o.id.toLowerCase().includes(orderSearch.toLowerCase()));
+  const filt=[['all','All'],['undelivered','🚚 Undelivered'],['awaiting','📬 Awaiting'],['stock','📦 Stock'],['dues','💰 Dues']];
+  let cards='';
+  if(filtered.length===0)cards=`<div class="empty"><div class="empty-title">No orders match</div></div>`;
+  else filtered.forEach(o=>{
+    const v=getV(o.vendorId),c=getC(o.customerId);
+    const profit=(o.customerPrice||0)-(o.vendorPrice||0);
+    const cDue=Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0));
+    const chk=selectMode?`<input type="checkbox" style="width:18px;height:18px;margin-right:8px;accent-color:#1a6b8a;flex-shrink:0" ${selectedOrders.has(o.id)?'checked':''} onclick="toggleSel('${o.id}',event)">`:'';
+    const ph=o.photo?`<img src="${o.photo}" style="width:46px;height:46px;border-radius:10px;object-fit:cover;flex-shrink:0">`:'';
+    cards+=`<div class="card" onclick="orderCardClick('${o.id}',event)"><div style="display:flex;gap:10px;align-items:flex-start">${chk}${ph}<div style="flex:1;min-width:0"><div class="fw700" style="font-size:15px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(o.productName)}</div><div class="text-xs" style="margin-bottom:6px">${o.id}&nbsp;&middot;&nbsp;${o.orderDate}${o.size?' &middot; '+esc(o.size):''}</div><div style="display:flex;gap:5px;flex-wrap:wrap">${v?badge('🏪 '+v.name,'gray'):''}${c?badge('👤 '+c.name,'gray'):''}${!c&&o.type==='stock_order'?badge('📦 Stock','primary'):''}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">${o.customerPrice>0?`<div style="font-size:13px;font-weight:700;color:${profit>=0?'#2a7d52':'#c0392b'}">${profit>=0?'+':''}${fmt(profit)}</div>`:''}${cDue>0?`<div style="font-size:11px;color:#c0392b;font-weight:600">${fmt(cDue)} due</div>`:''}${o.type==='customer_order'?badge(o.deliveryStatus==='delivered'?'✅':'🚚',o.deliveryStatus==='delivered'?'success':'warning'):badge(o.stockStatus==='sold'?'Sold ✅':'Stock 📦',o.stockStatus==='sold'?'success':'primary')}</div></div></div>`;
+  });
+  const selBar=selectMode&&selectedOrders.size>0?`<div class="select-bar"><div style="font-size:13px;font-weight:600">${selectedOrders.size} selected</div><div style="display:flex;gap:8px"><button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.5)" onclick="shareSelectedOrders()">📤 Share WA</button><button class="btn btn-sm btn-danger" onclick="cancelSelect()">Cancel</button></div></div>`:'';
+  return `<div class="sec-hdr"><div class="title-lg">Orders <span style="font-size:14px;color:#6b8899;font-weight:400">(${orders.length})</span></div><div style="display:flex;gap:6px"><button class="btn btn-sm btn-gray" onclick="toggleSelectMode()">&#10003; Select</button><button class="btn btn-sm btn-primary" onclick="showAddOrder()">+ New</button></div></div><input class="search-box" placeholder="🔍  Search by name or order ID…" value="${esc(orderSearch)}" oninput="orderSearch=this.value;renderMain()"><div class="filters">${filt.map(([k,l])=>`<button class="filter-btn${orderFilter===k?' active':''}" onclick="setFilter('${k}')">${l}</button>`).join('')}</div>${cards}${selBar}`;
+}
+
+function orderCardClick(id,e){if(selectMode)toggleSel(id,e);else showOrderDetail(id);}
+function toggleSelectMode(){selectMode=!selectMode;selectedOrders.clear();renderMain();}
+function toggleSel(id,e){e.stopPropagation();selectedOrders.has(id)?selectedOrders.delete(id):selectedOrders.add(id);renderMain();}
+function cancelSelect(){selectMode=false;selectedOrders.clear();renderMain();}
+function setFilter(f){orderFilter=f;renderMain();}
+
+function showOrderDetail(id){
+  const o=getO(id);if(!o)return;
+  const v=getV(o.vendorId),c=getC(o.customerId);
+  const vBal=Math.max(0,(o.vendorPrice||0)-(o.vendorAmountPaid||0));
+  const cBal=Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0));
+  const profit=(o.customerPrice||0)-(o.vendorPrice||0);
+  const showCust=o.type==='customer_order'||(o.type==='stock_order'&&o.stockStatus==='sold'&&c);
+  const phHtml=o.photo?`<img src="${o.photo}" class="photo-full">`:'';
+  const profHtml=(o.customerPrice>0||o.vendorPrice>0)?`<div class="profit-chip ${profit>=0?'profit-pos':'profit-neg'}">${profit>=0?'📈 Margin:':'📉 Loss:'} ${fmt(Math.abs(profit))}</div>`:'';
+  const vs=`<div class="section sec-vendor"><div class="section-title">🏪 VENDOR</div><div class="row-sb" style="margin-bottom:10px"><div><div class="fw700" style="font-size:15px">${esc(v?.name||'—')}</div>${v?.phone?`<div class="text-xs">📞 ${esc(v.phone)}</div>`:''}</div>${badge(o.vendorOrderStatus==='received'?'✅ Received':'⏳ Ordered',o.vendorOrderStatus==='received'?'success':'primary')}</div><div class="pay-row"><div>Total<b>${fmt(o.vendorPrice)}</b></div><div>Paid<b style="color:#2a7d52">${fmt(o.vendorAmountPaid)}</b></div><div>Balance<b style="color:${vBal>0?'#c0392b':'#2a7d52'}">${fmt(vBal)}</b></div></div><div class="text-xs" style="margin-bottom:${v?.phone?'10px':'0'}">Mode: <b>${o.vendorPaymentMode}</b></div>${v?.phone?`<div class="row-btn"><button class="btn btn-sm btn-wa" onclick="waPlaceOrder('${id}')">📩 Place Order WA</button><button class="btn btn-sm btn-wa" onclick="waVendorPayment('${id}')">💰 Payment Status</button></div>`:''}</div>`;
+  const cs=showCust?`<div class="section sec-customer"><div class="section-title">👤 CUSTOMER</div><div class="row-sb" style="margin-bottom:10px"><div><div class="fw700" style="font-size:15px">${esc(c?.name||'—')}</div>${c?.phone?`<div class="text-xs">📞 ${esc(c.phone)}</div>`:''}${c?.address?`<div class="text-xs">📍 ${esc(c.address)}</div>`:''}</div>${o.type==='customer_order'?badge(o.deliveryStatus==='delivered'?'✅ Delivered':'🚚 Pending',o.deliveryStatus==='delivered'?'success':'warning'):''}</div><div class="pay-row"><div>Total<b>${fmt(o.customerPrice)}</b></div><div>Paid<b style="color:#2a7d52">${fmt(o.customerAmountPaid)}</b></div><div>Balance<b style="color:${cBal>0?'#c0392b':'#2a7d52'}">${fmt(cBal)}</b></div></div><div class="text-xs" style="margin-bottom:${c?.phone?'10px':'0'}">Mode: <b>${o.customerPaymentMode}</b></div>${c?.phone?`<div class="row-btn"><button class="btn btn-sm btn-wa" onclick="waCustPayment('${id}')">💰 Payment Status</button><button class="btn btn-sm btn-wa" onclick="waOrderDetails('${id}')">📋 Order Details</button>${o.vendorOrderStatus==='received'&&o.deliveryStatus!=='delivered'?`<button class="btn btn-sm btn-wa" onclick="waReadyDeliver('${id}')">📦 Ready to Deliver</button>`:''}${o.deliveryStatus==='delivered'?`<button class="btn btn-sm btn-wa" onclick="waDelivered('${id}')">✅ Delivered Msg</button>`:''}</div>`:''}</div>`:''
+  const snote=o.type==='stock_order'&&o.stockStatus==='in_stock'?`<div style="background:#e6f5ee;border-radius:14px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:#2a7d52;font-weight:600">📦 Unsold stock — edit order to mark as Sold and link a customer.</div>`:'';
+  const nHtml=o.notes?`<div style="background:#f5f5f5;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:13px;color:#3d5566">📝 ${esc(o.notes)}</div>`:'';
+  const body=`${phHtml}<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">${badge(o.type==='stock_order'?'📦 Stock Order':'🛍️ Customer Order','primary')}${o.type==='customer_order'?badge(o.deliveryStatus==='delivered'?'✅ Delivered':'🚚 Pending',o.deliveryStatus==='delivered'?'success':'warning'):''}${o.type==='stock_order'?badge(o.stockStatus==='sold'?'✅ Sold':'📦 In Stock',o.stockStatus==='sold'?'success':'primary'):''}${badge(o.vendorOrderStatus==='received'?'📬 Received':'⏳ Awaiting',o.vendorOrderStatus==='received'?'success':'gray')}</div><div style="font-size:22px;font-weight:800;color:#1c2b36;margin-bottom:2px">${esc(o.productName)}</div><div class="text-sm" style="margin-bottom:12px">Qty: ${o.quantity}${o.size?' &middot; Size: '+esc(o.size):''}${o.description?' &middot; '+esc(o.description):''}</div>${profHtml}${vs}${cs}${snote}${nHtml}<button class="btn btn-ghost btn-full" onclick="showEditOrder('${id}')">&#9998; Edit this Order</button>`;
+  openModal(o.id,body,`${o.category} &middot; ${o.orderDate}`);
+}
+
+function showAddOrder(){
+  const o={id:newId(),type:'customer_order',productName:'',category:categories[0]||'Kurti',quantity:1,size:'',description:'',vendorId:'',customerId:'',vendorPrice:'',customerPrice:'',orderDate:toStr(),vendorOrderStatus:'ordered',deliveryStatus:'pending',stockStatus:'in_stock',vendorPaymentMode:'Credit',vendorAmountPaid:0,customerPaymentMode:'Credit',customerAmountPaid:0,notes:'',photo:''};
+  renderOrderForm(o,false);
+}
+function showEditOrder(id){const o=getO(id);if(o)renderOrderForm({...o},true);}
+
+function buildSizeHtml(cat,curSize){
+  const opts=getSizeOpts(cat);
+  if(!opts)return `<div class="field"><div class="field-label">Size / Specification (optional)</div><input type="text" id="of-size-free" class="finput" value="${esc(curSize||'')}" placeholder="Optional size or spec"></div>`;
+  const isCustom=curSize&&!opts.slice(0,-1).includes(curSize);
+  return `<div class="field"><div class="field-label">Size</div><select id="of-size" class="finput" onchange="onSizeChange()"><option value="">— Select Size —</option>${opts.map(s=>`<option value="${s}" ${curSize===s||(s==='Custom'&&isCustom)?'selected':''}>${s}</option>`).join('')}</select></div><div class="field" id="custom-size-wrap" style="display:${isCustom?'block':'none'}"><div class="field-label">Custom Size</div><input type="text" id="of-custom-size" class="finput" value="${esc(isCustom?curSize:'')}" placeholder="Enter custom size"></div>`;
+}
+
+function renderOrderForm(o,isEdit){
+  const catOpts=categories.map(c=>`<option value="${esc(c)}" ${o.category===c?'selected':''}>${esc(c)}</option>`).join('')+`<option value="__new__">+ Add New Category</option>`;
+  const vOpts=`<option value="">— Select Vendor —</option>`+vendors.map(v=>`<option value="${esc(v.id)}" ${o.vendorId===v.id?'selected':''}>${esc(v.name)}</option>`).join('');
+  const cOpts=`<option value="">— Select Customer —</option>`+customers.map(c=>`<option value="${esc(c.id)}" ${o.customerId===c.id?'selected':''}>${esc(c.name)}</option>`).join('');
+  const pm=sel=>PAY_MODES.map(p=>`<option value="${p}" ${sel===p?'selected':''}>${p}</option>`).join('');
+  const sizeHtml=buildSizeHtml(o.category,o.size);
+  const isCA=o.type==='customer_order';
+  const isSold=o.type==='stock_order'&&o.stockStatus==='sold';
+  const phHtml=o.photo?`<div style="margin-bottom:8px"><img src="${o.photo}" style="width:80px;height:80px;border-radius:10px;object-fit:cover"><br><button type="button" class="btn btn-sm btn-danger" style="margin-top:6px" onclick="clearPhoto()">🗑️ Remove</button></div>`:'';
+  const body=`
+<div class="field"><div class="field-label">Order Type</div><select id="of-type" class="finput" onchange="onTypeChange()"><option value="customer_order" ${o.type==='customer_order'?'selected':''}>🛍️ Customer Order</option><option value="stock_order" ${o.type==='stock_order'?'selected':''}>📦 Stock Order (Own Account)</option></select></div>
+<div class="row"><div class="col"><div class="field"><div class="field-label">Product Name *</div><input type="text" id="of-name" class="finput" value="${esc(o.productName)}" placeholder="e.g. Blue Cotton Kurti"></div></div><div style="width:76px"><div class="field"><div class="field-label">Qty</div><input type="number" id="of-qty" class="finput" value="${o.quantity||1}" min="1"></div></div></div>
+<div class="row"><div class="col"><div class="field"><div class="field-label">Category</div><select id="of-cat" class="finput" onchange="onCatChange()">${catOpts}</select></div></div><div class="col"><div class="field"><div class="field-label">Date</div><input type="date" id="of-date" class="finput" value="${o.orderDate}"></div></div></div>
+<div id="size-section">${sizeHtml}</div>
+<div class="field"><div class="field-label">Product Photo</div>${phHtml}<div class="photo-upload-area" id="photo-area" onclick="document.getElementById('photo-input').click()">📷 ${o.photo?'Change photo':'Tap to add photo from camera / gallery'}</div></div>
+<div class="section sec-vendor"><div class="section-title">🏪 VENDOR DETAILS</div>
+<div class="field"><div class="field-label">Vendor *</div><select id="of-vendor" class="finput">${vOpts}</select></div>
+<div class="row"><div class="col"><div class="field"><div class="field-label">Vendor Price (&#8377;)</div><input type="number" id="of-vprice" class="finput" value="${o.vendorPrice||''}" placeholder="0"></div></div><div class="col"><div class="field"><div class="field-label">Paid to Vendor (&#8377;)</div><input type="number" id="of-vpaid" class="finput" value="${o.vendorAmountPaid||0}"></div></div></div>
+<div class="row"><div class="col"><div class="field"><div class="field-label">Payment Mode</div><select id="of-vpm" class="finput">${pm(o.vendorPaymentMode||'Credit')}</select></div></div><div class="col"><div class="field"><div class="field-label">Order Status</div><select id="of-vstatus" class="finput"><option value="ordered" ${o.vendorOrderStatus!=='received'?'selected':''}>⏳ Ordered</option><option value="received" ${o.vendorOrderStatus==='received'?'selected':''}>✅ Received</option></select></div></div></div>
+</div>
+<div id="cust-section" style="display:${isCA?'block':'none'}"><div class="section sec-customer"><div class="section-title">👤 CUSTOMER DETAILS</div>
+<div class="field"><div class="field-label">Customer *</div><select id="of-cust" class="finput">${cOpts}</select></div>
+<div class="row"><div class="col"><div class="field"><div class="field-label">Selling Price (&#8377;)</div><input type="number" id="of-cprice" class="finput" value="${o.customerPrice||''}" placeholder="0"></div></div><div class="col"><div class="field"><div class="field-label">Received (&#8377;)</div><input type="number" id="of-cpaid" class="finput" value="${o.customerAmountPaid||0}"></div></div></div>
+<div class="row"><div class="col"><div class="field"><div class="field-label">Payment Mode</div><select id="of-cpm" class="finput">${pm(o.customerPaymentMode||'Credit')}</select></div></div><div class="col"><div class="field"><div class="field-label">Delivery Status</div><select id="of-dstatus" class="finput"><option value="pending" ${o.deliveryStatus!=='delivered'?'selected':''}>🚚 Pending</option><option value="delivered" ${o.deliveryStatus==='delivered'?'selected':''}>✅ Delivered</option></select></div></div></div>
+</div></div>
+<div id="stock-section" style="display:${o.type==='stock_order'?'block':'none'}"><div class="section sec-stock"><div class="section-title">📦 STOCK DETAILS</div>
+<div class="field"><div class="field-label">Stock Status</div><select id="of-sstatus" class="finput" onchange="onStockChange()"><option value="in_stock" ${o.stockStatus!=='sold'?'selected':''}>📦 In Stock</option><option value="sold" ${o.stockStatus==='sold'?'selected':''}>✅ Sold</option></select></div>
+<div id="stock-sold" style="display:${isSold?'block':'none'}">
+<div class="field"><div class="field-label">Sold To (Customer)</div><select id="of-scust" class="finput">${cOpts}</select></div>
+<div class="row"><div class="col"><div class="field"><div class="field-label">Selling Price (&#8377;)</div><input type="number" id="of-scprice" class="finput" value="${isSold?(o.customerPrice||''):''}" placeholder="0"></div></div><div class="col"><div class="field"><div class="field-label">Received (&#8377;)</div><input type="number" id="of-scpaid" class="finput" value="${isSold?(o.customerAmountPaid||0):0}"></div></div></div>
+<div class="field"><div class="field-label">Customer Payment Mode</div><select id="of-scpm" class="finput">${pm(isSold?(o.customerPaymentMode||'Credit'):'Credit')}</select></div>
+</div></div></div>
+<div class="field"><div class="field-label">Notes (optional)</div><textarea id="of-notes" class="finput" rows="3" placeholder="Any extra details…">${esc(o.notes||'')}</textarea></div>
+<input type="hidden" id="of-id" value="${esc(o.id)}">
+<input type="hidden" id="of-photo" value="${esc(o.photo||'')}">
+<div class="row" style="margin-top:4px"><button class="btn btn-ghost btn-full" onclick="closeModal()">Cancel</button><button class="btn btn-primary btn-full" onclick="saveOrder()">&#128190; Save Order</button></div>`;
+  openModal(isEdit?'Edit '+o.id:'New Order',body);
+}
+
+function onTypeChange(){
+  const t=document.getElementById('of-type')?.value;
+  if(document.getElementById('cust-section'))document.getElementById('cust-section').style.display=t==='customer_order'?'block':'none';
+  if(document.getElementById('stock-section'))document.getElementById('stock-section').style.display=t==='stock_order'?'block':'none';
+}
+function onStockChange(){
+  const s=document.getElementById('of-sstatus')?.value;
+  if(document.getElementById('stock-sold'))document.getElementById('stock-sold').style.display=s==='sold'?'block':'none';
+}
+function onSizeChange(){
+  const v=document.getElementById('of-size')?.value;
+  const cw=document.getElementById('custom-size-wrap');
+  if(cw)cw.style.display=v==='Custom'?'block':'none';
+}
+function onCatChange(){
+  const cat=document.getElementById('of-cat')?.value;
+  if(cat==='__new__'){
+    const name=prompt('Enter new category name:');
+    if(name&&name.trim()){
+      const n=name.trim();
+      if(!categories.includes(n)){categories.push(n);saveCats();}
+      const sel=document.getElementById('of-cat');
+      const opt=document.createElement('option');
+      opt.value=n;opt.textContent=n;opt.selected=true;
+      sel.insertBefore(opt,sel.lastElementChild);
+      sel.value=n;
+    } else {
+      const sel=document.getElementById('of-cat');
+      if(sel)sel.value=categories[0]||'';
+    }
+    return;
+  }
+  const sec=document.getElementById('size-section');
+  if(sec)sec.innerHTML=buildSizeHtml(cat,'');
+}
+function getFormSize(){
+  const se=document.getElementById('of-size');
+  if(se){const v=se.value;if(v==='Custom'){const cs=document.getElementById('of-custom-size');return cs?cs.value.trim():'';}return v;}
+  const fe=document.getElementById('of-size-free');
+  return fe?fe.value.trim():'';
+}
+function clearPhoto(){
+  const pf=document.getElementById('of-photo');if(pf)pf.value='';
+  const pa=document.getElementById('photo-area');
+  if(pa){const parent=pa.parentElement;
+  parent.innerHTML=`<div class="field-label">Product Photo</div><div class="photo-upload-area" id="photo-area" onclick="document.getElementById('photo-input').click()">📷 Tap to add photo from camera / gallery</div>`;
+  }
+}
+function saveOrder(){
+  const id=document.getElementById('of-id')?.value;
+  const name=document.getElementById('of-name')?.value?.trim();
+  const type=document.getElementById('of-type')?.value;
+  const vendorId=document.getElementById('of-vendor')?.value;
+  if(!name){alert('Product name is required.');return;}
+  if(!vendorId){alert('Please select a vendor.');return;}
+  if(type==='customer_order'&&!document.getElementById('of-cust')?.value){alert('Please select a customer.');return;}
+  const isSold=document.getElementById('of-sstatus')?.value==='sold';
+  const customerId=type==='customer_order'?document.getElementById('of-cust')?.value:(isSold?(document.getElementById('of-scust')?.value||''):'');
+  const customerPrice=type==='customer_order'?parseFloat(document.getElementById('of-cprice')?.value||0):(isSold?parseFloat(document.getElementById('of-scprice')?.value||0):0);
+  const customerAmountPaid=type==='customer_order'?parseFloat(document.getElementById('of-cpaid')?.value||0):(isSold?parseFloat(document.getElementById('of-scpaid')?.value||0):0);
+  const customerPaymentMode=type==='customer_order'?(document.getElementById('of-cpm')?.value||'Credit'):(isSold?(document.getElementById('of-scpm')?.value||'Credit'):'Credit');
+  const updated={id,type,productName:name,category:document.getElementById('of-cat')?.value||categories[0],quantity:parseInt(document.getElementById('of-qty')?.value||1),size:getFormSize(),description:'',vendorId,customerId:customerId||'',vendorPrice:parseFloat(document.getElementById('of-vprice')?.value||0),vendorAmountPaid:parseFloat(document.getElementById('of-vpaid')?.value||0),vendorPaymentMode:document.getElementById('of-vpm')?.value||'Credit',vendorOrderStatus:document.getElementById('of-vstatus')?.value||'ordered',customerPrice,customerAmountPaid,customerPaymentMode,deliveryStatus:type==='customer_order'?(document.getElementById('of-dstatus')?.value||'pending'):'pending',stockStatus:type==='stock_order'?(document.getElementById('of-sstatus')?.value||'in_stock'):'in_stock',orderDate:document.getElementById('of-date')?.value||toStr(),notes:document.getElementById('of-notes')?.value||'',photo:document.getElementById('of-photo')?.value||''};
+  const idx=orders.findIndex(o=>o.id===id);
+  if(idx>=0)orders[idx]=updated;else orders.unshift(updated);
+  saveO();closeModal();renderMain();
+  document.getElementById('hdr-count').textContent=orders.length+' orders';
+}
+
+function handlePhotoFile(input){
+  const file=input.files[0];if(!file)return;input.value='';
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      const canvas=document.createElement('canvas');
+      const MAX=600;let w=img.width,h=img.height;
+      if(w>h){if(w>MAX){h=Math.round(h*MAX/w);w=MAX;}}else{if(h>MAX){w=Math.round(w*MAX/h);h=MAX;}}
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      const data=canvas.toDataURL('image/jpeg',0.75);
+      const pf=document.getElementById('of-photo');if(pf)pf.value=data;
+      const pa=document.getElementById('photo-area');
+      if(pa){
+        const parent=pa.parentElement;
+        parent.innerHTML=`<div class="field-label">Product Photo</div><div style="margin-bottom:8px"><img src="${data}" style="width:80px;height:80px;border-radius:10px;object-fit:cover"><br><button type="button" class="btn btn-sm btn-danger" style="margin-top:6px" onclick="clearPhoto()">🗑️ Remove</button></div><div class="photo-upload-area" id="photo-area" onclick="document.getElementById('photo-input').click()">📷 Change photo</div>`;
+        const pf2=document.getElementById('of-photo');if(pf2)pf2.value=data;
+        else{const h2=document.createElement('input');h2.type='hidden';h2.id='of-photo';h2.value=data;parent.appendChild(h2);}
+      }
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderVendors(){
+  let h=`<div class="sec-hdr"><div class="title-lg">Vendors <span style="font-size:14px;color:#6b8899;font-weight:400">(${vendors.length})</span></div><button class="btn btn-sm btn-primary" onclick="showAddVendor()">+ Add Vendor</button></div>`;
+  if(vendors.length===0)return h+`<div class="empty"><div class="empty-icon">🏪</div><div class="empty-title">No vendors yet</div><div class="empty-sub">Add your vendors to start creating orders</div></div>`;
+  vendors.forEach(v=>{
+    const due=vendDue(v.id);
+    h+=`<div class="card-nc"><div class="row-sb"><div style="flex:1"><div class="fw700" style="font-size:16px;margin-bottom:2px">${esc(v.name)}</div>${v.specialty?`<div class="text-xs">🏷️ ${esc(v.specialty)}</div>`:''}${v.phone?`<div class="text-xs" style="color:#1a6b8a">📞 ${esc(v.phone)}</div>`:''}${v.notes?`<div class="text-xs">📝 ${esc(v.notes)}</div>`:''}${due>0?`<div class="outstanding">💸 To Pay: ${fmt(due)}</div>`:''}</div><div style="display:flex;gap:6px;align-items:center;flex-shrink:0;margin-left:8px">${v.phone?`<button class="btn btn-sm btn-wa" onclick="waOpen('${esc(v.phone)}','Hi ${esc(v.name)}! 👋')">💬</button>`:''}<button class="btn btn-sm btn-ghost" onclick="showEditVendor('${v.id}')">✏️</button><button class="btn btn-sm btn-danger" onclick="delVendor('${v.id}')">🗑️</button></div></div></div>`;
+  });
+  return h;
+}
+function showAddVendor(){renderVendorForm({id:'',name:'',phone:'',specialty:'',notes:''});}
+function showEditVendor(id){const v=vendors.find(x=>x.id===id);if(v)renderVendorForm({...v});}
+function renderVendorForm(v){
+  const isEdit=!!v.id;
+  const body=`<div class="field"><div class="field-label">Vendor Name *</div><input type="text" id="vf-name" class="finput" value="${esc(v.name||'')}"></div><div class="field"><div class="field-label">WhatsApp Number</div><input type="tel" id="vf-phone" class="finput" value="${esc(v.phone||'')}" placeholder="+91 98765 43210"><div class="field-note">Include country code, e.g. +91 for India</div></div><div class="field"><div class="field-label">Specialty</div><input type="text" id="vf-spec" class="finput" value="${esc(v.specialty||'')}" placeholder="e.g. Kurti, Bed Sheets, Jewellery"></div><div class="field"><div class="field-label">Notes</div><textarea id="vf-notes" class="finput" rows="2">${esc(v.notes||'')}</textarea></div><input type="hidden" id="vf-id" value="${esc(v.id||'')}"><div class="row" style="margin-top:4px"><button class="btn btn-ghost btn-full" onclick="closeModal()">Cancel</button><button class="btn btn-primary btn-full" onclick="saveVendor()">&#128190; Save Vendor</button></div>`;
+  openModal(isEdit?'Edit Vendor':'Add Vendor',body);
+}
+function saveVendor(){
+  const name=document.getElementById('vf-name')?.value?.trim();
+  if(!name){alert('Name is required.');return;}
+  const id=document.getElementById('vf-id')?.value||('V-'+Date.now());
+  const entry={id,name,phone:document.getElementById('vf-phone')?.value?.trim()||'',specialty:document.getElementById('vf-spec')?.value?.trim()||'',notes:document.getElementById('vf-notes')?.value?.trim()||''};
+  const idx=vendors.findIndex(v=>v.id===id);
+  if(idx>=0)vendors[idx]=entry;else vendors.push(entry);
+  saveV();closeModal();renderMain();
+}
+function delVendor(id){if(confirm('Delete this vendor?')){vendors=vendors.filter(v=>v.id!==id);saveV();renderMain();}}
+
+function renderCustomers(){
+  let h=`<div class="sec-hdr"><div class="title-lg">Customers <span style="font-size:14px;color:#6b8899;font-weight:400">(${customers.length})</span></div><button class="btn btn-sm btn-primary" onclick="showAddCustomer()">+ Add Customer</button></div>`;
+  if(customers.length===0)return h+`<div class="empty"><div class="empty-icon">👥</div><div class="empty-title">No customers yet</div><div class="empty-sub">Add your customers to track orders &amp; payments</div></div>`;
+  customers.forEach(c=>{
+    const due=custDue(c.id);
+    h+=`<div class="card-nc"><div class="row-sb"><div style="flex:1"><div class="fw700" style="font-size:16px;margin-bottom:2px">${esc(c.name)}</div>${c.phone?`<div class="text-xs" style="color:#1a6b8a">📞 ${esc(c.phone)}</div>`:''}${c.address?`<div class="text-xs">📍 ${esc(c.address)}</div>`:''}${c.notes?`<div class="text-xs">📝 ${esc(c.notes)}</div>`:''}${due>0?`<div class="outstanding">💸 Outstanding: ${fmt(due)}</div>`:''}</div><div style="display:flex;gap:6px;align-items:center;flex-shrink:0;margin-left:8px">${c.phone?`<button class="btn btn-sm btn-success" onclick="showStatement('${c.id}')" title="Statement">📊</button>`:''} ${c.phone?`<button class="btn btn-sm btn-wa" onclick="waOpen('${esc(c.phone)}','Hi ${esc(c.name)}! 👋')">💬</button>`:''}<button class="btn btn-sm btn-ghost" onclick="showEditCustomer('${c.id}')">✏️</button><button class="btn btn-sm btn-danger" onclick="delCustomer('${c.id}')">🗑️</button></div></div></div>`;
+  });
+  return h;
+}
+function showAddCustomer(){renderCustomerForm({id:'',name:'',phone:'',address:'',notes:''});}
+function showEditCustomer(id){const c=customers.find(x=>x.id===id);if(c)renderCustomerForm({...c});}
+function renderCustomerForm(c){
+  const isEdit=!!c.id;
+  const body=`<div class="field"><div class="field-label">Customer Name *</div><input type="text" id="cf-name" class="finput" value="${esc(c.name||'')}"></div><div class="field"><div class="field-label">WhatsApp Number</div><input type="tel" id="cf-phone" class="finput" value="${esc(c.phone||'')}" placeholder="+91 98765 43210"><div class="field-note">Include country code, e.g. +91 for India</div></div><div class="field"><div class="field-label">Address</div><input type="text" id="cf-addr" class="finput" value="${esc(c.address||'')}" placeholder="Delivery address"></div><div class="field"><div class="field-label">Notes</div><textarea id="cf-notes" class="finput" rows="2">${esc(c.notes||'')}</textarea></div><input type="hidden" id="cf-id" value="${esc(c.id||'')}"><div class="row" style="margin-top:4px"><button class="btn btn-ghost btn-full" onclick="closeModal()">Cancel</button><button class="btn btn-primary btn-full" onclick="saveCustomer()">&#128190; Save Customer</button></div>`;
+  openModal(isEdit?'Edit Customer':'Add Customer',body);
+}
+function saveCustomer(){
+  const name=document.getElementById('cf-name')?.value?.trim();
+  if(!name){alert('Name is required.');return;}
+  const id=document.getElementById('cf-id')?.value||('C-'+Date.now());
+  const entry={id,name,phone:document.getElementById('cf-phone')?.value?.trim()||'',address:document.getElementById('cf-addr')?.value?.trim()||'',notes:document.getElementById('cf-notes')?.value?.trim()||''};
+  const idx=customers.findIndex(c=>c.id===id);
+  if(idx>=0)customers[idx]=entry;else customers.push(entry);
+  saveC();closeModal();renderMain();
+}
+function delCustomer(id){if(confirm('Delete this customer?')){customers=customers.filter(c=>c.id!==id);saveC();renderMain();}}
+
+function showStatement(cid){
+  const c=getC(cid);if(!c)return;
+  const co=orders.filter(o=>o.customerId===cid);
+  const totBiz=co.reduce((s,o)=>s+(o.customerPrice||0),0);
+  const totPaid=co.reduce((s,o)=>s+(o.customerAmountPaid||0),0);
+  const totDue=Math.max(0,totBiz-totPaid);
+  let rows='';
+  co.forEach((o,i)=>{
+    const bal=Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0));
+    rows+=`<div style="border-bottom:1px solid #eee;padding:8px 0"><div class="row-sb"><div><div class="fw600" style="font-size:13px">${esc(o.productName)}${o.size?' ('+esc(o.size)+')':''}</div><div class="text-xs">${o.id} &middot; ${o.orderDate}</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:700">${fmt(o.customerPrice)}</div>${bal>0?`<div class="text-xs text-danger">Due: ${fmt(bal)}</div>`:`<div class="text-xs text-success">Paid ✅</div>`}</div></div></div>`;
+  });
+  const body=`<div style="background:#e8f4f8;border-radius:12px;padding:12px;margin-bottom:16px"><div class="row-sb"><div class="text-xs">Total Business</div><div class="fw700" style="font-size:15px">${fmt(totBiz)}</div></div><div class="row-sb" style="margin-top:6px"><div class="text-xs">Total Paid</div><div class="fw700 text-success" style="font-size:15px">${fmt(totPaid)}</div></div><div class="row-sb" style="margin-top:6px"><div class="text-xs">Outstanding</div><div class="fw700 text-danger" style="font-size:15px">${fmt(totDue)}</div></div></div><div class="title-sm" style="margin-bottom:8px">📦 Orders (${co.length})</div>${rows||`<div class="text-xs">No orders yet</div>`}${c.phone?`<div style="margin-top:16px"><button class="btn btn-wa btn-full" onclick="waStatement('${cid}')">📤 Share Statement via WhatsApp</button></div>`:''}<div style="margin-top:8px"><button class="btn btn-ghost btn-full" onclick="closeModal()">Close</button></div>`;
+  openModal(`${esc(c.name)} — Statement`,body,`${co.length} orders &middot; ${fmt(totDue)} outstanding`);
+}
+
+function openModal(title,body,sub){
+  document.getElementById('modal-title').innerHTML=title;
+  document.getElementById('modal-sub').innerHTML=sub||'';
+  document.getElementById('modal-body').innerHTML=body;
+  document.getElementById('overlay').style.display='block';
+  document.getElementById('modal-body').scrollTop=0;
+}
+function closeModal(){document.getElementById('overlay').style.display='none';document.getElementById('modal-body').innerHTML='';}
+function overlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
+
+function waOpen(phone,msg){const num=(phone||'').replace(/\D/g,'');if(!num){alert('Phone number not saved.');return;}window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank');}
+function waPlaceOrder(id){const o=getO(id),v=getV(o?.vendorId);if(!o||!v){return;}const msg=`*${BOUTIQUE}*\n\nPlacing an order:\n\u{1F6CD}\uFE0F *Product:* ${o.productName}\n\u{1F3F7}\uFE0F *Category:* ${o.category}${o.size?'\n\u{1F4D0} *Size:* '+o.size:''}\n\uD83D\uDD22 *Qty:* ${o.quantity}${o.notes?'\n\uD83D\uDCDD *Notes:* '+o.notes:''}\n\nKindly confirm availability. Thank you! \uD83D\uDE4F`;waOpen(v.phone,msg);}
+function waVendorPayment(id){const o=getO(id),v=getV(o?.vendorId);if(!o||!v)return;const bal=Math.max(0,(o.vendorPrice||0)-(o.vendorAmountPaid||0));const msg=`*${BOUTIQUE}*\n\nPayment update \u2014 Order ${o.id}\n\uD83D\uDCE6 *Product:* ${o.productName}\n\uD83D\uDCCA *Status:* ${o.vendorOrderStatus==='received'?'\u2705 Received':'\u23F3 Awaiting'}\n\n\uD83D\uDCB0 *Payment:*\n\u2022 Total: ${fmtPlain(o.vendorPrice)}\n\u2022 Paid: ${fmtPlain(o.vendorAmountPaid)}\n\u2022 Balance: ${fmtPlain(bal)}\n\nThank you! \uD83D\uDE4F`;waOpen(v.phone,msg);}
+function waCustPayment(id){const o=getO(id),c=getC(o?.customerId);if(!o||!c)return;const bal=Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0));const msg=`*${BOUTIQUE}*\n\nPayment update \u2014 Order ${o.id}\n\uD83D\uDED2 *Product:* ${o.productName}${o.size?' ('+o.size+')':''}\n\uD83D\uDE9A *Delivery:* ${o.deliveryStatus==='delivered'?'\u2705 Delivered':'\uD83D\uDD04 In Progress'}\n\n\uD83D\uDCB0 *Payment:*\n\u2022 Total: ${fmtPlain(o.customerPrice)}\n\u2022 Paid: ${fmtPlain(o.customerAmountPaid)}\n\u2022 Balance: ${fmtPlain(bal)}\n\nThank you! \uD83D\uDE4F`;waOpen(c.phone,msg);}
+function waOrderDetails(id){const o=getO(id),c=getC(o?.customerId);if(!o||!c)return;const bal=Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0));const msg=`*${BOUTIQUE}*\n\n\uD83D\uDCCB *Order Details*\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\uD83C\uDD94 Order ID: ${o.id}\n\uD83D\uDCC5 Date: ${o.orderDate}\n\uD83D\uDED2 Product: ${o.productName}\n\uD83C\uDFF7\uFE0F Category: ${o.category}${o.size?'\n\uD83D\uDCD0 Size: '+o.size:''}\n\uD83D\uDD22 Qty: ${o.quantity}\n\n\uD83D\uDE9A *Status:* ${o.deliveryStatus==='delivered'?'\u2705 Delivered':'\uD83D\uDE9A In Progress'}\n\n\uD83D\uDCB0 *Payment:*\n\u2022 Total: ${fmtPlain(o.customerPrice)}\n\u2022 Paid: ${fmtPlain(o.customerAmountPaid)}\n\u2022 Balance: ${fmtPlain(bal)}\n\u2022 Mode: ${o.customerPaymentMode}\n\nThank you for shopping with us! \uD83D\uDE4F`;waOpen(c.phone,msg);}
+function waReadyDeliver(id){const o=getO(id),c=getC(o?.customerId);if(!o||!c)return;const msg=`*${BOUTIQUE}*\n\nHi ${c.name}! \uD83C\uDF89\n\nYour order is ready for delivery!\n\uD83D\uDCE6 *Product:* ${o.productName}${o.size?' ('+o.size+')':''}\n\uD83C\uDD94 *Order ID:* ${o.id}\n\nPlease confirm your delivery address. Thank you! \uD83D\uDE4F`;waOpen(c.phone,msg);}
+function waDelivered(id){const o=getO(id),c=getC(o?.customerId);if(!o||!c)return;const msg=`*${BOUTIQUE}*\n\nHi ${c.name}! \u2705\n\nYour order has been delivered!\n\uD83D\uDCE6 *Product:* ${o.productName}${o.size?' ('+o.size+')':''}\n\uD83C\uDD94 *Order ID:* ${o.id}\n\nWe hope you love it! \uD83D\uDE0A Thank you for shopping with us! \uD83D\uDE4F`;waOpen(c.phone,msg);}
+function waStatement(cid){
+  const c=getC(cid);if(!c)return;
+  const co=orders.filter(o=>o.customerId===cid);
+  const totDue=co.reduce((s,o)=>s+Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0)),0);
+  let msg=`*${BOUTIQUE}*\n\nHi ${c.name}! \uD83D\uDC4B\n\n\uD83D\uDCCA *Your Account Statement*\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n`;
+  co.forEach((o,i)=>{const bal=Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0));msg+=`\n${i+1}. ${o.productName}${o.size?' ('+o.size+')':''}\n   ${o.id} \u00B7 ${o.orderDate}\n   Total: ${fmtPlain(o.customerPrice)} | Paid: ${fmtPlain(o.customerAmountPaid)} | Due: ${fmtPlain(bal)}\n   ${o.deliveryStatus==='delivered'?'\u2705 Delivered':'\uD83D\uDE9A Pending'}`;});
+  msg+=`\n\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\uD83D\uDCB8 *Total Outstanding: ${fmtPlain(totDue)}*\n\nKindly arrange payment at your convenience.\nThank you! \uD83D\uDE4F`;
+  closeModal();waOpen(c.phone,msg);
+}
+function shareSelectedOrders(){
+  if(selectedOrders.size===0)return;
+  const sel=Array.from(selectedOrders).map(id=>getO(id)).filter(Boolean);
+  const custIds=[...new Set(sel.map(o=>o.customerId).filter(Boolean))];
+  if(custIds.length===0){alert('No customer linked. Please link customers to orders first.');return;}
+  if(custIds.length===1){
+    const c=getC(custIds[0]);if(!c?.phone){alert('No phone number for this customer.');return;}
+    buildAndSendSelMsg(custIds[0],sel.filter(o=>o.customerId===custIds[0]));
+  } else {
+    let b=`<div style="margin-bottom:14px;font-size:14px">Orders span multiple customers. Choose who to share with:</div>`;
+    custIds.forEach(cid=>{const c=getC(cid);if(!c)return;b+=`<button class="btn btn-ghost btn-full" style="margin-bottom:8px" onclick="buildAndSendSelMsg('${cid}',null)">📤 Share to ${esc(c.name)}</button>`;});
+    b+=`<button class="btn btn-gray btn-full" onclick="closeModal()">Cancel</button>`;
+    openModal('Share Selected Orders',b);
+  }
+}
+function buildAndSendSelMsg(cid,prefiltered){
+  const c=getC(cid);if(!c?.phone){closeModal();return;}
+  const sel=(prefiltered||Array.from(selectedOrders).map(id=>getO(id)).filter(o=>o&&o.customerId===cid));
+  let msg=`*${BOUTIQUE}*\n\nHi ${c.name}! \uD83D\uDC4B\n\n\uD83D\uDCE6 *Order Summary*\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n`;
+  sel.forEach((o,i)=>{const bal=Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0));msg+=`\n${i+1}. *${o.productName}*${o.size?' ('+o.size+')':''}\n   ID: ${o.id} \u00B7 ${o.orderDate}\n   Total: ${fmtPlain(o.customerPrice)} | Paid: ${fmtPlain(o.customerAmountPaid)} | Due: ${fmtPlain(bal)}\n   ${o.deliveryStatus==='delivered'?'\u2705 Delivered':'\uD83D\uDE9A Pending'}`;});
+  const td=sel.reduce((s,o)=>s+Math.max(0,(o.customerPrice||0)-(o.customerAmountPaid||0)),0);
+  msg+=`\n\n\uD83D\uDCB8 *Total Due: ${fmtPlain(td)}*\n\nThank you! \uD83D\uDE4F`;
+  closeModal();cancelSelect();waOpen(c.phone,msg);
+}
+
+
+function showSettings(){
+  const used=getStorageUsed();
+  const last=localStorage.getItem('sb_last_backup');
+  const daysSince=last?Math.floor((Date.now()-parseInt(last))/(1000*60*60*24)):null;
+  const backupColor=daysSince===null?'#c0392b':daysSince===0?'#2a7d52':daysSince<=3?'#b45309':'#c0392b';
+  const backupMsg=daysSince===null?'⚠️ Never backed up!':daysSince===0?'✅ Backed up today':daysSince<=3?`⚠️ Last backup ${daysSince} day${daysSince>1?'s':''} ago`:`🚨 No backup in ${daysSince} days!`;
+  const body=`
+<div style="background:#fdecea;border-radius:14px;padding:14px;margin-bottom:14px;border:1.5px solid #f5c6c6">
+  <div style="font-size:13px;font-weight:800;color:#c0392b;margin-bottom:8px">❓ Why is my old data missing?</div>
+  <div style="font-size:12px;color:#5a2d2d;line-height:1.65">If you entered data while <b>viewing this app in Claude chat</b>, that data was saved to Claude's website — <b>not to this file</b>. Opening the downloaded HTML file starts with fresh, empty storage.<br><br>👉 Always use this downloaded <b>SparshBizTrack.html</b> file for real entries. Data entered here will stay on <b>this phone's browser</b>.</div>
+</div>
+<div style="background:#e8f4f8;border-radius:14px;padding:14px;margin-bottom:14px">
+  <div style="font-size:13px;font-weight:700;color:#1a6b8a;margin-bottom:6px">📍 Storage Info</div>
+  <div style="font-size:12px;color:#3d5566;line-height:1.6">Data lives in <b>this browser's local storage</b> on this device only. It will be lost if you clear browser data or change phones — so <b>backup regularly!</b></div>
+  <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12px">
+    <span style="color:#6b8899">Space used: <b>${used}</b></span>
+    <span style="color:${backupColor};font-weight:700">${backupMsg}</span>
+  </div>
+</div>
+<div style="font-size:14px;font-weight:700;color:#1c2b36;margin-bottom:12px">💾 Backup &amp; Restore</div>
+<div class="card-nc" style="margin-bottom:10px;border:2px solid ${daysSince===null||daysSince>3?'#f5c6c6':'#d4e6ed'}">
+  <div style="font-weight:700;font-size:14px;margin-bottom:4px">📤 Export Backup</div>
+  <div style="font-size:12px;color:#6b8899;margin-bottom:10px">Downloads all your orders, vendors &amp; customers as a .json file. Save it to Google Drive, WhatsApp yourself, or email it. <b>Do this weekly!</b></div>
+  <button class="btn btn-primary btn-full" onclick="exportData()">⬇️ Download Backup File Now</button>
+</div>
+<div class="card-nc" style="margin-bottom:10px">
+  <div style="font-weight:700;font-size:14px;margin-bottom:4px">📥 Restore from Backup</div>
+  <div style="font-size:12px;color:#6b8899;margin-bottom:10px">Select a previously exported .json backup file to restore your data. <span style="color:#c0392b;font-weight:600">This will replace ALL current data.</span></div>
+  <button class="btn btn-ghost btn-full" onclick="document.getElementById('import-input').click()">⬆️ Select Backup File</button>
+</div>
+<div class="card-nc">
+  <div style="font-weight:700;font-size:14px;margin-bottom:6px">📋 Backup guide</div>
+  <div style="font-size:12px;color:#3d5566;line-height:1.7">1. Tap <b>Download Backup File</b> above<br>2. Save the .json file to <b>Google Drive</b> or WhatsApp it to yourself<br>3. Also keep <b>SparshBizTrack.html</b> saved safely<br>4. On a new phone: open the HTML in Chrome → ⚙️ Settings → Restore → select your .json backup<br><br>💡 <b>Tip:</b> An orange/red dot on the ⚙️ button means you need to backup!</div>
+</div>
+<div style="margin-top:10px"><button class="btn btn-gray btn-full" onclick="closeModal()">Close</button></div>`;
+  openModal('⚙️ Settings &amp; Backup',body,'Data backup &amp; restore');
+  updateBackupStatus();
+}
+
+function getStorageUsed(){
+  let total=0;
+  ['sb_vendors','sb_customers','sb_orders','sb_categories'].forEach(k=>{
+    const v=localStorage.getItem(k);
+    if(v)total+=v.length;
+  });
+  if(total<1024)return total+' bytes';
+  if(total<1048576)return (total/1024).toFixed(1)+' KB';
+  return (total/1048576).toFixed(2)+' MB';
+}
+
+function exportData(){
+  const data={
+    version:1,
+    exportedAt:new Date().toISOString(),
+    boutique:'Sparsh Boutique by Nidhi',
+    vendors,customers,orders,categories
+  };
+  const json=JSON.stringify(data,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const dt=new Date().toISOString().split('T')[0];
+  a.href=url;
+  a.download=`SparshBoutique_Backup_${dt}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  localStorage.setItem('sb_last_backup', Date.now().toString());
+  localStorage.setItem('sb_save_count','0');
+  updateBackupStatus();
+  document.getElementById('backup-banner')?.remove();
+  alert('✅ Backup downloaded!\n\nSave this file to Google Drive or WhatsApp it to yourself for safekeeping. Your backup status has been updated.');
+}
+
+function importData(input){
+  const file=input.files[0];
+  if(!file)return;
+  input.value='';
+  if(!file.name.endsWith('.json')){alert('Please select a valid .json backup file.');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      if(!data.version||!Array.isArray(data.orders)){
+        alert('Invalid backup file. Please select a file exported from this app.');return;
+      }
+      if(!confirm(`Restore backup from ${data.exportedAt?new Date(data.exportedAt).toLocaleString():'unknown date'}?\n\nThis will replace ALL current data.\n\nOrders: ${data.orders.length}\nVendors: ${data.vendors.length}\nCustomers: ${data.customers.length}\n\nAre you sure?`))return;
+      vendors=data.vendors||[];
+      customers=data.customers||[];
+      orders=data.orders||[];
+      categories=data.categories||DEFAULT_CATS;
+      saveV();saveC();saveO();saveCats();
+      closeModal();
+      renderMain();
+      document.getElementById('hdr-count').textContent=orders.length+' orders';
+      alert('✅ Data restored successfully!\n\n'+orders.length+' orders, '+vendors.length+' vendors, '+customers.length+' customers loaded.');
+    }catch(err){
+      alert('Failed to read backup file. Please make sure it is a valid backup.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+loadData();
+switchTab('dashboard');
+// Startup confirmation toast
+setTimeout(()=>{
+  if(orders.length>0||vendors.length>0||customers.length>0){
+    showToast('✅ Loaded: '+orders.length+' orders, '+vendors.length+' vendors, '+customers.length+' customers','success',3500);
+  }
+  updateBackupStatus();
+},400);
+// Backup nudge on page exit if no recent backup
+window.addEventListener('beforeunload',()=>{
+  const last=localStorage.getItem('sb_last_backup');
+  const days=last?Math.floor((Date.now()-parseInt(last))/(1000*60*60*24)):999;
+  if(days>=3&&(orders.length>0||vendors.length>0)){
+    return 'You have unsaved backup. Export a backup from Settings before closing!';
+  }
+});
+</script>
+</body>
+</html>
